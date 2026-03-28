@@ -10,8 +10,7 @@
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "lint": "biome check .",
-    "lint:fix": "biome check --write .",
-    "commit": "cz commit"
+    "lint:fix": "biome check --write ."
   },
   "dependencies": {
     "react": "^19.1.0",
