@@ -23,6 +23,8 @@ Manifest V3 Chrome extension. All entry points are declared in `manifest.json` a
 | `src/background/index.ts` | Service worker | No DOM access |
 | `src/content/index.ts` | Content script | Injected into all URLs |
 
+`popup` and `options` are independent React SPAs — each has its own `index.html`, `index.tsx` (React root + StrictMode), and `App.tsx`. Both import `src/styles/globals.css`, which is a single `@import "tailwindcss"` line; Tailwind is configured entirely via the `@tailwindcss/vite` plugin.
+
 To add a new entry point (e.g. `newtab`), declare it in `manifest.json`. CRXJS picks it up automatically.
 
 ## Critical constraints
@@ -34,5 +36,6 @@ To add a new entry point (e.g. `newtab`), declare it in `manifest.json`. CRXJS p
 ## Tooling
 
 - **Biome** replaces ESLint and Prettier. Style: double quotes, semicolons, trailing commas, 2-space indent, 100-char line width.
-- **Commitlint** enforces Conventional Commits (`feat:`, `fix:`, `chore:`, etc.).
-- **Tailwind v4** is configured via the `@tailwindcss/vite` plugin — no `tailwind.config.js` or PostCSS config exists or is needed. CSS entry is a single `@import "tailwindcss"` in `src/styles/globals.css`.
+- **Commitlint + Commitizen** enforce Conventional Commits (`feat:`, `fix:`, `chore:`, etc.). Use `cz commit` for the interactive prompt; raw `git commit` is also enforced via the `commit-msg` Husky hook.
+- **lint-staged** runs `biome check --write` on staged `*.ts`, `*.tsx`, `*.js`, `*.json` files before each commit.
+- **semantic-release** is configured on `main` — merging to `main` triggers automated versioning and GitHub releases based on commit messages.
